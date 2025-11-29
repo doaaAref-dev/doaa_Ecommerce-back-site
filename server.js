@@ -9,17 +9,14 @@ const path = require("path");
 dotenv.config();
 const app = express();
 
-// connect to DB
 connectDB();
 
-// Middlewares
 app.use(cors());
 app.use(helmet());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(morgan('dev'));
 
-// Routes
 app.use("/api/users", require("./route/AdminUsers.route"));
 app.use("/api/auth", require("./route/auth.routes"));
 app.use("/api/products", require('./route/product.routes'));
@@ -31,7 +28,7 @@ app.use("/api/wishlist", require("./route/wishlistRoutes"));
 app.use("/api/orders", require("./route/orderRoutes"));
 app.use("/api/logo", require("./route/logo.route"));
 
-// Error handler
+
 app.use(require('./middleware/error.middleware'));
 
-module.exports = app; // فقط export app بدون serverless
+module.exports = app; 

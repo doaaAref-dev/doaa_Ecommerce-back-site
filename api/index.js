@@ -1,3 +1,3 @@
 const serverless = require("serverless-http");
-const app = require("../server"); // استدعاء Express app
+const app = require("../server");
 module.exports.handler = serverless(app);

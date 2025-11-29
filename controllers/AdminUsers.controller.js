@@ -1,8 +1,6 @@
-// controllers/user.controller.js
 const User = require("../model/AdminUsers.model");
 const bcrypt =require("bcryptjs")
 
-// إنشاء مستخدم جديد
 exports.createUser = async (req, res) => {
   try {
     const { name, email, phone, password, permissions, role } = req.body;
@@ -26,7 +24,6 @@ exports.createUser = async (req, res) => {
   }
 };
 
-// جلب كل المستخدمين
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password");
@@ -38,7 +35,6 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-// تحديث مستخدم
 exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,7 +52,6 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-// حذف مستخدم
 exports.deleteUser = async (req, res) => {
   try {
     const { id } = req.params;

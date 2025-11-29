@@ -9,7 +9,6 @@ const toArray = (val) => {
   return [val];
 };
 
-// @desc    Get all products
 const getProducts = async (req, res) => {
   try {
     const products = await Product.find({});
@@ -28,11 +27,11 @@ const getLatestProducts = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(limit);
 
-    console.log("✅ Found latest products:", products.length);
+    console.log(" Found latest products:", products.length);
 
     res.status(200).json(products);
   } catch (error) {
-    console.error("❌ Error fetching latest products:", error);
+    console.error(" Error fetching latest products:", error);
     res.status(500).json({
       
       message: "Error fetching latest products",
@@ -41,7 +40,6 @@ const getLatestProducts = async (req, res) => {
     });
   }
 };
-// @desc    Create product
 const createProduct = async (req, res) => {
   try {
     const {
@@ -59,7 +57,6 @@ const createProduct = async (req, res) => {
     const sizes = toArray(req.body.sizes);
     const tags = toArray(req.body.tags);
 
-    // هترجع لينكات الصور
    const images = req.files
   ? req.files.map((f) => `${req.protocol}://${req.get("host")}/uploads/${f.filename}`)
   : [];
@@ -89,21 +86,17 @@ const createProduct = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-// Get products by category ID
 const getProductsByCategory = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // هل القيمة ObjectId ؟
     const isObjectId = id.length === 24;
 
     let products;
 
     if (isObjectId) {
-      // لو ID → فلترة حسب الكاتيجوري
       products = await Product.find({ category: id });
     } else {
-      // لو String → فلترة حسب subCategory
       products = await Product.find({ subCategory: id });
     }
 
@@ -124,7 +117,6 @@ const getProductsBySubCategory = async (req, res) => {
   }
 };
 
-// @desc    Get product by ID
 const getProductById = async (req, res) => {
   
   try {
@@ -152,12 +144,11 @@ const getProductsBySearch = async (req, res) => {
     const products = await Product.find(filter).lean();
     res.json(products);
   } catch (err) {
-    console.error("❌ Error in getProductsBySearch:", err.message);
+    console.error(" Error in getProductsBySearch:", err.message);
     console.error(err.stack);
     res.status(500).json({ message: err.message });
   }
 };
-// @desc    Update product
 const updateProduct = async (req, res) => {
   try {
     const {
@@ -202,13 +193,12 @@ const updateProduct = async (req, res) => {
   }
 };
 
-// @desc    Delete product
 const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ message: "Product not found" });
 
-    await product.deleteOne(); // ✅ بدل remove()
+    await product.deleteOne(); 
     res.json({ message: "Product removed" });
   } catch (error) {
     console.error("Delete error:", error);
@@ -230,7 +220,7 @@ const AddReview = async (req, res) => {
       { new: true }
     );
 
-    res.json(updated.reviews);  // يفضل إعادة الريفيوهات فقط
+    res.json(updated.reviews);  
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

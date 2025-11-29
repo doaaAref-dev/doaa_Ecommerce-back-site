@@ -1,6 +1,5 @@
 const Blog = require("../model/Blog.model");
 
-// إضافة مدونة
 exports.createBlog = async (req, res) => {
   try {
     const { title, description, status } = req.body;
@@ -15,7 +14,6 @@ exports.createBlog = async (req, res) => {
   }
 };
 
-// الحصول على جميع المدونات
 exports.getBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 });
@@ -25,7 +23,6 @@ exports.getBlogs = async (req, res) => {
   }
 };
 
-// تحديث مدونة
 exports.updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
@@ -48,7 +45,6 @@ exports.updateBlog = async (req, res) => {
   }
 };
 
-// حذف مدونة
 exports.deleteBlog = async (req, res) => {
   try {
     const { id } = req.params;

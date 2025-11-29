@@ -1,4 +1,3 @@
-// controllers/auth.controller.js
 const User = require('../model/user.model');
 const jwt = require('jsonwebtoken');
 const bcryptjs =require("bcryptjs")
@@ -13,7 +12,6 @@ exports.register = async (req, res, next) => {
       return res.status(400).json({ message: "Passwords do not match" });
     }
 
-    // تحقق من الباسوورد
     if (!password || password.length < 6) {
       return res.status(400).json({ message: "Password must be at least 6 characters long" });
     }
@@ -48,13 +46,12 @@ exports.login = async (req, res, next) => {
     const token = createToken(user);
 
     res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
-    console.log(req.body); // يوضح البيانات اللي جاية من الريأكت
+    console.log(req.body); 
 console.log(user);
   } catch (err) { next(err); }
 };
 exports.profile = async (req, res, next) => {
   try {
-    // هنا هتجيبي الـ userId من الـ middleware (اللي بيفك التوكن)
     const user = await User.findById(req.user.id).select("-password");
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
@@ -73,7 +70,7 @@ exports.updateProfile = async (req, res) => {
     user.phone = req.body.phone || user.phone;
 
     if (req.body.password) {
-      user.password = req.body.password; // هيتهندل في الـ pre('save') بالهاش
+      user.password = req.body.password; 
     }
 
     const updatedUser = await user.save();
@@ -90,7 +87,7 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
-// تغيير كلمة السر
+
 exports.changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
@@ -98,16 +95,16 @@ exports.changePassword = async (req, res) => {
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // التحقق من الباسورد القديم
+ 
     const isMatch = await user.matchPassword(oldPassword);
     if (!isMatch) {
-      return res.status(400).json({ message: "كلمة السر القديمة غير صحيحة" });
+      return res.status(400).json({ message: "incorrect password" });
     }
 
-    user.password = newPassword; // هيتهندل بالـ pre('save') اللي بيعمل hash
+    user.password = newPassword; 
     await user.save();
 
-    res.json({ message: "✅ تم تغيير كلمة المرور بنجاح" });
+    res.json({ message: "password changed" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

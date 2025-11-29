@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const homeSlideSchema = new mongoose.Schema(
   {
-    image: { type: String, required: true }, // الصورة فقط
+    image: { type: String, required: true },
   },
   { timestamps: true }
 );

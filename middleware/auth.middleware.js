@@ -5,32 +5,32 @@ exports.protect = async (req, res, next) => {
   let token;
   const authHeader = req.headers.authorization;
 
-  console.log("🔹 Incoming Authorization header:", authHeader); // ✅ شوفي الهيدر جاي ولا لأ
+  console.log("🔹 Incoming Authorization header:", authHeader); 
 
   if (authHeader && authHeader.startsWith('Bearer ')) {
     token = authHeader.split(' ')[1];
   }
 
   if (!token) {
-    console.log("❌ No token provided");
+    console.log(" No token provided");
     return res.status(401).json({ message: 'Not authorized, no token' });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("✅ Decoded token:", decoded);
+    console.log(" Decoded token:", decoded);
 
     req.user = await User.findById(decoded.id).select('-password');
 
     if (!req.user) {
-      console.log("❌ User not found in DB");
+      console.log(" User not found in DB");
       return res.status(401).json({ message: 'User not found' });
     }
 
-    console.log("🟢 Authenticated user:", req.user._id);
+    console.log(" Authenticated user:", req.user._id);
     next();
   } catch (err) {
-    console.error("❌ Token verification failed:", err.message);
+    console.error(" Token verification failed:", err.message);
     return res.status(401).json({ message: 'Token invalid' });
   }
 };

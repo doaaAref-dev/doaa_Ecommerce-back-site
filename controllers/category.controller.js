@@ -1,8 +1,6 @@
 const Category = require("../model/Category.model");
 
-// =====================
-// إنشاء كاتيجوري جديد
-// =====================
+
 exports.createCategory = async (req, res) => {
   try {
     console.log("req.body:", req.body);
@@ -28,21 +26,17 @@ exports.createCategory = async (req, res) => {
   }
 };
 
-// =====================
-// تحديث كاتيجوري
-// =====================
+
 exports.updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, subCategories, status } = req.body;
 
-    // جيب الكاتيجوري الأول
     const oldCategory = await Category.findById(id);
     if (!oldCategory) {
       return res.status(404).json({ message: "Category not found" });
     }
 
-    // جهز البيانات للتحديث
     const updateData = {
       name: name ?? oldCategory.name,
       subCategories: subCategories
@@ -51,7 +45,6 @@ exports.updateCategory = async (req, res) => {
       status: status ?? oldCategory.status,
     };
 
-    // لو فيه صورة جديدة نضيفها
     if (req.file) {
       updateData.image = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
     } else {
@@ -69,9 +62,7 @@ exports.updateCategory = async (req, res) => {
   }
 };
 
-// =====================
-// حذف كاتيجوري
-// =====================
+
 exports.deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -88,9 +79,7 @@ exports.deleteCategory = async (req, res) => {
   }
 };
 
-// =====================
-// جلب كل الكاتيجوريز
-// =====================
+
 exports.getCategories = async (req, res) => {
   try {
     const categories = await Category.find();
@@ -101,9 +90,7 @@ exports.getCategories = async (req, res) => {
   }
 };
 
-// =====================
-// جلب كاتيجوري واحد
-// =====================
+
 exports.getCategoryById = async (req, res) => {
   try {
     const { id } = req.params;

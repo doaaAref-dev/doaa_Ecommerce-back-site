@@ -1,4 +1,3 @@
-// models/User.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const cartItemSchema = new mongoose.Schema({
@@ -30,14 +29,12 @@ const userSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-// hash password قبل الحفظ
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
-// method للمقارنة
 userSchema.methods.matchPassword = async function(enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 }

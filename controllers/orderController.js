@@ -1,11 +1,10 @@
 const Order = require("../model/Order");
 
-// 🟢 إنشاء أوردر جديد
 const createOrder = async (req, res) => {
   try {
     const { items, totalQty, totalPrice } = req.body;
-    const userId = req.user.id; // جاية من التوكن بعد الـ middleware
-console.log("🟢 Authenticated user:", req.user._id);
+    const userId = req.user.id; 
+console.log(" Authenticated user:", req.user._id);
 
     if (!items || items.length === 0) {
       return res.status(400).json({ message: "Cart is empty" });
@@ -29,7 +28,6 @@ console.log("🟢 Authenticated user:", req.user._id);
   }
 };
 
-// 🟢 عرض كل الطلبات لمستخدم محدد
 const getUserOrders = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -40,7 +38,6 @@ const getUserOrders = async (req, res) => {
   }
 };
 
-// 🟢 (اختياري) عرض كل الطلبات للأدمن
 const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find()
@@ -49,8 +46,8 @@ const getAllOrders = async (req, res) => {
         path: "items.productId",
         select: "name category images price",
         populate: {
-          path: "category", // ده الحقل اللي جوه الـ Product
-          select: "name",   // الحقول اللي محتاجاها من الـ Category
+          path: "category", 
+          select: "name",   
         },
       });
 
@@ -61,7 +58,6 @@ const getAllOrders = async (req, res) => {
   }
 };
 
-// تحديث حالة الطلب
 const updateOrderStatus = async (req, res) => {
   try {
     const { status } = req.body;
@@ -88,7 +84,6 @@ module.exports = {
 
 
 
-// ✅ تصدير الدوال
 module.exports = {
   createOrder,
   getUserOrders,

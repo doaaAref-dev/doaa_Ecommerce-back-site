@@ -10,7 +10,6 @@ const {
 } = require( "../controllers/logo.controller");
 
 
-// Multer config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -22,10 +21,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // حد 5MB
+  limits: { fileSize: 5 * 1024 * 1024 }, 
 });
 
-// ✅ Routes
 router.get("/", getLogo);
 router.post("/", upload.single("logo"), uploadLogo);
 router.delete("/", removeLogo);

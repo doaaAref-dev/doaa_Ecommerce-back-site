@@ -1,5 +1,4 @@
-// cartProduct.model.js
-const reviewSchema = require("./reviews"); // <-- مهم جدًا
+const reviewSchema = require("./reviews"); 
 
 const mongoose = require('mongoose');
 

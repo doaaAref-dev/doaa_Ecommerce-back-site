@@ -1,7 +1,6 @@
 const User = require("../model/user.model");
 const Product = require("../model/cartProduct.model");
 
-// 🟢 جلب محتوى الكارت
 const getCart = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate("cart.product");
@@ -11,10 +10,9 @@ const getCart = async (req, res) => {
   }
 };
 
-// 🟢 إضافة منتج إلى الكارت
 const addToCart = async (req, res) => {
   try {
-    console.log("🧠 addToCart called");
+    console.log("addToCart called");
     console.log("req.user:", req.user);
     console.log("req.body:", req.body);
 
@@ -42,13 +40,12 @@ const addToCart = async (req, res) => {
     const updatedUser = await user.populate("cart.product");
     res.json(updatedUser.cart);
   } catch (err) {
-    console.error("❌ Error in addToCart:", err);
+    console.error(" Error in addToCart:", err);
     res.status(500).json({ message: err.message });
   }
 };
 
 
-// 🔴 تحديث الكمية (اختياري)
 const updateCartQty = async (req, res) => {
   try {
     const { productId, qty } = req.body;
@@ -69,7 +66,6 @@ const updateCartQty = async (req, res) => {
   }
 };
 
-// 🔴 حذف منتج من الكارت
 const removeFromCart = async (req, res) => {
   try {
     const { productId } = req.params;
@@ -87,7 +83,6 @@ const removeFromCart = async (req, res) => {
   }
 };
 
-// 🔴 مسح الكارت بالكامل
 const clearCart = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);

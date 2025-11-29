@@ -1,6 +1,5 @@
 const HomeSlide = require("../model/HomeSlider.model");
 
-// ➕ إضافة سلايد
 exports.createSlide = async (req, res) => {
   try {
     const image = req.file ? `/uploads/${req.file.filename}` : null;
@@ -16,7 +15,6 @@ exports.createSlide = async (req, res) => {
   }
 };
 
-// 📌 الحصول على جميع السلايدز
 exports.getSlides = async (req, res) => {
   try {
     const slides = await HomeSlide.find().sort({ createdAt: -1 });
@@ -26,7 +24,6 @@ exports.getSlides = async (req, res) => {
   }
 };
 
-// ✏️ تحديث سلايد (تغيير الصورة فقط)
 exports.updateSlide = async (req, res) => {
   try {
     const { id } = req.params;
@@ -44,7 +41,6 @@ exports.updateSlide = async (req, res) => {
   }
 };
 
-// 🗑️ حذف سلايد
 exports.deleteSlide = async (req, res) => {
   try {
     const { id } = req.params;

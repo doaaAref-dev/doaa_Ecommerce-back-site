@@ -4,7 +4,6 @@ const multer = require("multer");
 const path = require("path");
 const homeSlideController = require("../controllers/homeSlider.controller");
 
-// إعداد رفع الصور
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -15,7 +14,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// الراوتات
 router.post("/", upload.single("image"), homeSlideController.createSlide);
 router.get("/", homeSlideController.getSlides);
 router.put("/:id", upload.single("image"), homeSlideController.updateSlide);

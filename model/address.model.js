@@ -42,11 +42,11 @@ const addressSchema = new mongoose.Schema(
     },
     isDefault: {
       type: Boolean,
-      default: false, // عشان لو عايزة تحددي عنوان افتراضي
+      default: false, 
     },
   },
   {
-    timestamps: true, // createdAt & updatedAt
+    timestamps: true, 
   }
 );
 
